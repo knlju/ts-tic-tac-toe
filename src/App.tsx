@@ -1,24 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Board from './components/Board';
+import { useGameContext } from './contexts/GameContext';
+import { testEngine } from './helpers/engine';
 
 function App() {
+
+  const {dispatch, state} = useGameContext()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        tic tac toe singleplayer
       </header>
+      <div>
+        <Board />
+        <button onClick={() => dispatch({type: "UNDO"})}>
+          undo
+        </button>
+        <button  onClick={() => dispatch({type: "RESTART"})}>
+          reset
+        </button>
+        <button onClick={() => dispatch({type: 'PLAY_MOVE', payload: {move: testEngine(state.board, state.playerToMove)}})}>
+          <h1>
+            Commence testing
+          </h1>
+        </button>
+      </div>
+      <div>
+        <h1>
+          Result: {state.gameResult === "" ? "ongoing" : state.gameResult}
+        </h1>
+        <h1>
+          playerToMove: {state.playerToMove}
+        </h1>
+      </div>
     </div>
   );
 }
