@@ -1,21 +1,60 @@
-import { Move } from '../contexts/gameReducer';
-import { Board, Player } from './../types/game';
-import getGameResult, { GameResult } from './gameEnded';
+import {Move} from '../contexts/gameReducer';
+import {Board, Player} from './../types/game';
+import getGameResult, {GameResult} from './gameEnded';
+import {StrikeLine} from "../contexts/initialState";
 
 export function getOppositePlayer(player: Player) {
     return player === "o" ? "x" : "o"
 }
 
-export function findBestMove(board: Board, playerToMove: Player): Move {
-    let bestMove: Move = {
-        player: "x",
-        tile: {
-            coordinate: -1,
-            fill: ""
-        }
+export function getStrikeLine(board: Board): StrikeLine {
+
+    if((board[0].fill === "x" && board[1].fill === "x" && board[2].fill === "x") || (board[0].fill === "o" && board[1].fill === "o" && board[2].fill === "o")) {
+        return StrikeLine.V1
     }
+
+    if((board[3].fill === "x" && board[4].fill === "x" && board[5].fill === "x") || (board[3].fill === "o" && board[4].fill === "o" && board[5].fill === "o")) {
+        return StrikeLine.V2
+    }
+
+    if((board[6].fill === "x" && board[7].fill === "x" && board[8].fill === "x") || (board[6].fill === "o" && board[7].fill === "o" && board[8].fill === "o")) {
+        return StrikeLine.V3
+    }
+
+    if((board[0].fill === "x" && board[3].fill === "x" && board[6].fill === "x") || (board[0].fill === "o" && board[3].fill === "o" && board[6].fill === "o")) {
+        return StrikeLine.H1
+    }
+
+    if((board[1].fill === "x" && board[4].fill === "x" && board[7].fill === "x") || (board[1].fill === "o" && board[4].fill === "o" && board[7].fill === "o")) {
+        return StrikeLine.H2
+    }
+
+    if((board[2].fill === "x" && board[5].fill === "x" && board[8].fill === "x") || (board[2].fill === "o" && board[5].fill === "o" && board[8].fill === "o")) {
+        return StrikeLine.H3
+    }
+
+    if((board[0].fill === "x" && board[4].fill === "x" && board[8].fill === "x") || (board[0].fill === "o" && board[4].fill === "o" && board[8].fill === "o")) {
+        return StrikeLine.D2
+    }
+
+    if((board[2].fill === "x" && board[4].fill === "x" && board[6].fill === "x") || (board[2].fill === "o" && board[4].fill === "o" && board[6].fill === "o")) {
+        return StrikeLine.D1
+    }
+
+    return StrikeLine.NONE
+}
+
+/**
+ * Should always return Move
+ * if you get null something went wrong
+ *
+ * @param board
+ * @param playerToMove
+ */
+export function findBestMove(board: Board, playerToMove: Player): Move {
+    let bestMove: Move
     let bestMoveEval = playerToMove === "x" ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY
-    getMoves(board, playerToMove).forEach(move => {
+    for (const move of getMoves(board, playerToMove)) {
         const newBoard = makeMove(board, move)
         const oppositePlayer = getOppositePlayer(playerToMove)
         const currMoveEval = minimax(newBoard, oppositePlayer)
@@ -30,7 +69,9 @@ export function findBestMove(board: Board, playerToMove: Player): Move {
                 bestMove = move
             }
         }
-    })
+    }
+    // TODO
+    // @ts-ignore
     return bestMove
 }
 
@@ -86,6 +127,7 @@ function minimax(board: Board, player: Player): GameEnding {
     }
 
     // should never reach
+    alert("error")
     return 0
 }
 

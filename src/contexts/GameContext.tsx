@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useReducer, useState } from 'react'
+import React, {createContext, useContext, useEffect, useReducer, useState} from 'react'
 import gameReducer, {Action} from './gameReducer'
 import initialState, {GameState} from './initialState'
+import {testEngine} from "../helpers/engine";
 
 interface GameContextType {
   state: GameState,
@@ -15,9 +16,17 @@ type Props = {
   children: JSX.Element
 }
 
-const GameProvider = ({children}: Props) => {
+const GameProvider = (props: Props) => {
 
   const [state, dispatch] = useReducer(gameReducer, initialState)
+
+  useEffect(() => {
+    if (state.playerToMove !== state.humanPlayer) {
+      dispatch({type: 'PLAY_MOVE', payload: {move: testEngine(state.board, (state.playerToMove))}})
+    }
+  }, [state.playerToMove])
+
+  const {children} = props
 
   return (
     <GameContext.Provider value={{state, dispatch}}>

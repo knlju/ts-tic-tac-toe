@@ -5,10 +5,10 @@ import App from './App';
 import GameProvider from './contexts/GameContext';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <GameProvider>
       <App />
-    </GameProvider>
-  </React.StrictMode>,
+    </GameProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );

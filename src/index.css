@@ -1,36 +1,136 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    display: flex;
+    justify-content: center;
+    /*flex-direction: column;*/
+    margin: 20px 0;
+    gap: 30px;
+}
+
+:root {
+    --primary: #F3C6BC;
+    --secondary: rgba(34, 99, 176, 1);
+    --action: #FC3003;
+    --inactive: #F1A204;
+    --side: rgba(168, 148, 116, 0.92);
+}
+
+body, button {
+    font-size: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--secondary);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 .board {
-  display: grid;
-  width: 300px;
-  height: 300px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  /* align-items: center; */
-  /* text-align: center; */
-  /* align-content: center; */
+    display: grid;
+    width: 300px;
+    height: 300px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: var(--inactive);
+    border-radius: 10px;
+    padding: 10px;
+    gap: 5px;
+    color: white;
+    position: relative;
+    box-shadow: 0 10px 47px 24px rgba(0, 0, 0, 0.1);
 }
 
 .tile {
-  background-color: aliceblue;
-  border: 3px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    background-color: var(--action);
+    border: 3px solid var(--side);
+    border-bottom: 7px solid var(--side);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 50px;
 }
+
+.tile:active {
+    border: 3px solid var(--side);
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px;
+    margin-right: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: var(--inactive);
+    cursor: pointer;
+}
+
+.line {
+    width: 20px;
+    height: 240px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, .8);
+    position: absolute;
+    display: none;
+}
+
+.line:hover {
+    cursor: grabbing;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.h1 {
+    left: 48px;
+    top: 46px;
+    display: block;
+}
+
+.h2 {
+    right: 150px;
+    top: 46px;
+    display: block;
+}
+
+.h3 {
+    right: 48px;
+    top: 46px;
+    display: block;
+}
+
+.v1 {
+    transform: rotate(90deg) translateY(-50%);
+    top: -56px;
+    left: 28px;
+    display: block;
+}
+
+.v2 {
+    transform: rotate(90deg) translateY(-50%);
+    top: 44px;
+    left: 28px;
+    display: block;
+}
+
+.v3 {
+    transform: rotate(90deg) translateY(-50%);
+    top: 147px;
+    left: 28px;
+    display: block;
+}
+
+.d1 {
+    transform: rotate(45deg) translateY(-31%) translateX(137px) scale(1, 1.4);
+    display: block;
+}
+
+.d2 {
+    transform: rotate(135deg) translateY(-58%) translateX(-74px) scale(1, 1.4);
+    display: block;
+}
+
